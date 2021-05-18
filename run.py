@@ -5,10 +5,8 @@ import random
 import json 
 
 from flask import Flask
-from flask import request, render_template, send_file
-from flask import jsonify
-from flask_socketio import SocketIO
-from flask_apscheduler import APScheduler
+from flask import request, render_template
+
 from flask_caching import Cache
 
 import logging
@@ -26,7 +24,6 @@ config = {
 }
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode=async_mode)
 
 app.config.from_mapping(config)
 cache = Cache(app)
@@ -76,6 +73,3 @@ def all_elections():
 #    return '<html><br>Total Roots: {}<br>Total_Votes: {}<br>Avg Votes: {:f}<br><br>{}</html>'.format(total_roots, total_votes, avg_votes, all)
     logging.info('Done')
     return render_template('index.html', bucket_data=replace_new_all)
-
-if __name__ == '__main__':
-    socketio.run(app)
